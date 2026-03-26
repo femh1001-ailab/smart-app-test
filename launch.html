@@ -1,0 +1,30 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+    <meta charset="UTF-8" /> 
+    <title>Launch My APP</title> 
+    <!-- 引入 SMART on FHIR JavaScript 用戶端程式庫 -->
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+</head> 
+<body>
+    <p>正在導向授權畫面，請稍候...</p>
+    <script> 
+        // 呼叫 authorize 方法來啟動授權流程
+        FHIR.oauth2.authorize({
+            // clientId: 填寫你在 EHR 註冊取得的 Client ID。
+            // 在官方 SMART App Launcher 沙盒測試時，目前不會嚴格驗證此欄位，可先使用 "my_web_app"
+            clientId: "my_web_app",
+            
+            // scope: 你向 EHR 請求的權限範圍。
+            // "launch" 代表要求接收 EHR 啟動的上下文 (Context)
+            // "patient/*.read" 代表要求讀取病患的所有相關資料
+            // "openid fhirUser" 代表要求驗證使用者身分
+            scope: "launch openid fhirUser patient/*.read",
+            
+            // redirectUri: 授權成功後，EHR 會將使用者重新導向的實際應用程式頁面。
+            // 如果你的 index.html 和 launch.html 在同一個目錄下，直接寫 "index.html" 即可
+            redirectUri: "index.html"
+        }); 
+    </script>
+</body> 
+</html>
